@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../../../widgets/metric_card.dart';
-import '../../../widgets/revenue_chart.dart';
+import '../../widgets/charts/revenue_chart.dart';
 import '../../../widgets/metric_graph_modal.dart';
 
 class DashboardTab extends StatelessWidget {
@@ -68,6 +68,7 @@ class DashboardTab extends StatelessWidget {
                     change: '-0.3%',
                     icon: MdiIcons.trendingUp,
                     isPositive: false,
+                    onPressed: () => _showMetricGraph(context, 'Conversion'),
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -78,6 +79,7 @@ class DashboardTab extends StatelessWidget {
                     change: '-2.1%',
                     icon: MdiIcons.exitToApp,
                     isPositive: true,
+                    onPressed: () => _showMetricGraph(context, 'Bounce Rate'),
                   ),
                 ),
               ],
