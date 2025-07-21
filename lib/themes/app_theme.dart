@@ -9,7 +9,7 @@ class AppTheme {
       seedColor: const Color(0xFF6750A4),
       brightness: Brightness.light,
     ),
-    textTheme: GoogleFonts.interTextTheme(),
+    textTheme: GoogleFonts.latoTextTheme(),
     appBarTheme: const AppBarTheme(
       centerTitle: true,
       elevation: 0,
@@ -31,7 +31,7 @@ class AppTheme {
       seedColor: const Color(0xFF6750A4),
       brightness: Brightness.dark,
     ),
-    textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme),
+    textTheme: GoogleFonts.latoTextTheme(ThemeData.dark().textTheme),
     appBarTheme: const AppBarTheme(
       centerTitle: true,
       elevation: 0,

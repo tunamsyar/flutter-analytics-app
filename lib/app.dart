@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'views/login_page.dart';
+import 'views/login_screen.dart';
 import 'themes/app_theme.dart';
 
 class MyApp extends StatelessWidget {
@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Wow Flutter App',
       theme: AppTheme.darkTheme,
-      home: const LoginPage(),
+      home: const LoginScreen(),
     );
   }
 }
