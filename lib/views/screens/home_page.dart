@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import '../tabs/analytics_tab.dart';
 import '../tabs/dashboard_tab.dart';
 import '../tabs/profile_tab.dart';
 
@@ -14,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   final List<Widget> _tabs = [
     const DashboardTab(),
-    const Center(child: Text('Analytics')),
+    const AnalyticsTab(),
     const ProfileTab(),
   ];
 
