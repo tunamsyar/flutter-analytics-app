@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../services/auth_service.dart';
+import '../services/firestore_service.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 final getIt = GetIt.instance;
@@ -24,4 +25,5 @@ Future<void> configureDependencies() async {
 
   // Services
   getIt.registerSingleton<AuthService>(AuthServiceImpl(getIt(), getIt()));
+  getIt.registerSingleton<FirestoreService>(FirestoreServiceImpl(getIt()));
 }
