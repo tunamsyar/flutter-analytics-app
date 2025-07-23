@@ -15,7 +15,7 @@ class AnalyticsTab extends StatelessWidget {
           bottom: const TabBar(
             tabs: [
               Tab(text: 'Users'),
-              Tab(text: 'Performance'),
+              Tab(text: 'User Engagement'),
             ],
           ),
         ),
