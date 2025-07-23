@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '/widgets/charts/revenue_chart.dart';
-import '/widgets/charts/users_bar_chart.dart';
+import '../../widgets/containers/user_engagement_chart_container.dart';
+import '../../widgets/containers/users_bar_chart_container.dart';
 
 class AnalyticsTab extends StatelessWidget {
   const AnalyticsTab({super.key});
@@ -19,7 +19,9 @@ class AnalyticsTab extends StatelessWidget {
             ],
           ),
         ),
-        body: const TabBarView(children: [UsersBarChart(), RevenueChart()]),
+        body: const TabBarView(
+          children: [UsersBarChartContainer(), UserEngagementChartContainer()],
+        ),
       ),
     );
   }

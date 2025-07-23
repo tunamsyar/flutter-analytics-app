@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'charts/revenue_line_chart.dart';
-import 'charts/users_bar_chart.dart';
-import 'charts/conversion_pie_chart.dart';
+import 'containers/revenue_line_chart_container.dart';
+import 'containers/users_bar_chart_container.dart';
+import 'containers/conversion_pie_chart_container.dart';
 
 class MetricGraphModal extends StatelessWidget {
   final String title;
@@ -11,11 +11,11 @@ class MetricGraphModal extends StatelessWidget {
   Widget _getChartWidget() {
     switch (title) {
       case 'Revenue':
-        return const RevenueLineChart();
+        return const RevenueLineChartContainer();
       case 'Users':
-        return const UsersBarChart();
+        return const UsersBarChartContainer();
       case 'Conversion':
-        return const ConversionPieChart();
+        return const ConversionPieChartContainer();
       default:
         return const SizedBox(child: Text('No chart available'));
     }

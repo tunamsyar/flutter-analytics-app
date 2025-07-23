@@ -1,11 +1,52 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../../../widgets/metric_card.dart';
-import '../../widgets/charts/revenue_chart.dart';
 import '../../../widgets/metric_graph_modal.dart';
+import '../../widgets/charts/sine_wave_chart.dart';
 
-class DashboardTab extends StatelessWidget {
+class DashboardTab extends StatefulWidget {
   const DashboardTab({super.key});
+
+  @override
+  State<DashboardTab> createState() => _DashboardTabState();
+}
+
+class _DashboardTabState extends State<DashboardTab> {
+  late double revenue;
+  late int users;
+  late double conversion;
+  late double bounceRate;
+
+  late double revenueChange;
+  late double userChange;
+  late double conversionChange;
+  late double bounceChange;
+
+  final random = Random();
+
+  @override
+  void initState() {
+    super.initState();
+    _generateRandomMetrics();
+  }
+
+  void _generateRandomMetrics() {
+    revenue = 100000 + random.nextInt(50000).toDouble();
+    users = 40000 + random.nextInt(10000);
+    conversion = 2 + random.nextDouble() * 2;
+    bounceRate = 20 + random.nextDouble() * 10;
+
+    revenueChange = _randomChange();
+    userChange = _randomChange();
+    conversionChange = _randomChange();
+    bounceChange = _randomChange();
+  }
+
+  double _randomChange() {
+    return (random.nextDouble() * 10 - 5); // -5% to +5%
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +57,9 @@ class DashboardTab extends StatelessWidget {
           IconButton(
             icon: Icon(MdiIcons.refresh),
             onPressed: () {
-              // Refresh data logic
+              setState(() {
+                _generateRandomMetrics();
+              });
             },
           ),
         ],
@@ -38,10 +81,11 @@ class DashboardTab extends StatelessWidget {
                 Expanded(
                   child: MetricCard(
                     title: 'Revenue',
-                    value: '\$125,430',
-                    change: '+12.5%',
+                    value: '\$${revenue.toStringAsFixed(0)}',
+                    change:
+                        '${revenueChange >= 0 ? '+' : ''}${revenueChange.toStringAsFixed(1)}%',
                     icon: MdiIcons.currencyUsd,
-                    isPositive: true,
+                    isPositive: revenueChange >= 0,
                     onPressed: () => _showMetricGraph(context, 'Revenue'),
                   ),
                 ),
@@ -49,10 +93,11 @@ class DashboardTab extends StatelessWidget {
                 Expanded(
                   child: MetricCard(
                     title: 'Users',
-                    value: '48,291',
-                    change: '+8.2%',
+                    value: users.toString(),
+                    change:
+                        '${userChange >= 0 ? '+' : ''}${userChange.toStringAsFixed(1)}%',
                     icon: MdiIcons.accountMultiple,
-                    isPositive: true,
+                    isPositive: userChange >= 0,
                     onPressed: () => _showMetricGraph(context, 'Users'),
                   ),
                 ),
@@ -64,10 +109,11 @@ class DashboardTab extends StatelessWidget {
                 Expanded(
                   child: MetricCard(
                     title: 'Conversion',
-                    value: '3.24%',
-                    change: '-0.3%',
+                    value: '${conversion.toStringAsFixed(2)}%',
+                    change:
+                        '${conversionChange >= 0 ? '+' : ''}${conversionChange.toStringAsFixed(1)}%',
                     icon: MdiIcons.trendingUp,
-                    isPositive: false,
+                    isPositive: conversionChange >= 0,
                     onPressed: () => _showMetricGraph(context, 'Conversion'),
                   ),
                 ),
@@ -75,10 +121,11 @@ class DashboardTab extends StatelessWidget {
                 Expanded(
                   child: MetricCard(
                     title: 'Bounce Rate',
-                    value: '24.8%',
-                    change: '-2.1%',
+                    value: '${bounceRate.toStringAsFixed(1)}%',
+                    change:
+                        '${bounceChange >= 0 ? '+' : ''}${bounceChange.toStringAsFixed(1)}%',
                     icon: MdiIcons.exitToApp,
-                    isPositive: true,
+                    isPositive: bounceChange >= 0,
                     onPressed: () => _showMetricGraph(context, 'Bounce Rate'),
                   ),
                 ),
@@ -86,26 +133,26 @@ class DashboardTab extends StatelessWidget {
             ),
             const SizedBox(height: 32),
             Text(
-              'Revenue Trend',
+              'For Funsies',
               style: Theme.of(
                 context,
               ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
-            const RevenueChart(),
+            const LineChartSample10(),
           ],
         ),
       ),
     );
   }
-}
 
-void _showMetricGraph(BuildContext context, String title) {
-  showModalBottomSheet(
-    context: context,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-    ),
-    builder: (_) => MetricGraphModal(title: title),
-  );
+  void _showMetricGraph(BuildContext context, String title) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (_) => MetricGraphModal(title: title),
+    );
+  }
 }
