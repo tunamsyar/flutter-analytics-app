@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
+import '../../providers/auth_provider.dart';
 
 class ProfileTab extends StatelessWidget {
   const ProfileTab({super.key});
@@ -141,10 +143,7 @@ class ProfileTab extends StatelessWidget {
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
-              // Stubbed sign-out logic
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(const SnackBar(content: Text('Signed out')));
+              context.read<AuthProvider>().signOut();
             },
             child: const Text('Sign Out'),
           ),

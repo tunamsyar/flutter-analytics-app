@@ -42,6 +42,22 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
+  Future<void> signInWithFacebook() async {
+    try {
+      _isLoading = true;
+      notifyListeners();
+
+      final user = await _authService.signInWithFacebook();
+      _user = user;
+    } catch (e) {
+      debugPrint('Facebook sign in error: $e');
+      rethrow;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
   Future<void> signOut() async {
     try {
       await _authService.signOut();

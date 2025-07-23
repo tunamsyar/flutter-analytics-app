@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:injectable/injectable.dart';
 import '../models/user_model.dart';
 
@@ -7,6 +8,8 @@ abstract class AuthService {
   User? get currentUser;
   Stream<User?> get authStateChanges;
   Future<UserModel?> signInWithGoogle();
+  Future<UserModel?> signInWithFacebook();
+
   Future<void> signOut();
 }
 
@@ -46,7 +49,31 @@ class AuthServiceImpl implements AuthService {
   }
 
   @override
+  Future<UserModel?> signInWithFacebook() async {
+    try {
+      final LoginResult loginResult = await FacebookAuth.instance.login();
+
+      if (loginResult.status == LoginStatus.success) {
+        final OAuthCredential facebookAuthCredential =
+            FacebookAuthProvider.credential(loginResult.accessToken!.token);
+
+        final UserCredential userCredential = await _firebaseAuth
+            .signInWithCredential(facebookAuthCredential);
+
+        return UserModel.fromFirebaseUser(userCredential.user!);
+      }
+      return null;
+    } catch (e) {
+      throw Exception('Facebook sign in failed: $e');
+    }
+  }
+
+  @override
   Future<void> signOut() async {
-    await Future.wait([_firebaseAuth.signOut(), _googleSignIn.signOut()]);
+    await Future.wait([
+      _firebaseAuth.signOut(),
+      _googleSignIn.signOut(),
+      FacebookAuth.instance.logOut(),
+    ]);
   }
 }

@@ -80,7 +80,7 @@ class LoginScreen extends StatelessWidget {
                         SocialLoginButton(
                           icon: MdiIcons.facebook,
                           label: 'Continue with Facebook',
-                          onPressed: () => _simulateLogin(context, 'Facebook'),
+                          onPressed: () => _signInWithFacebook(context),
                           backgroundColor: const Color.fromARGB(255, 4, 9, 15),
                           textColor: Colors.white,
                         ),
@@ -101,6 +101,14 @@ class LoginScreen extends StatelessWidget {
       await context.read<AuthProvider>().signInWithGoogle();
     } catch (e) {
       _showErrorSnackBar(context, 'Google sign in failed');
+    }
+  }
+
+  Future<void> _signInWithFacebook(BuildContext context) async {
+    try {
+      await context.read<AuthProvider>().signInWithFacebook();
+    } catch (e) {
+      _showErrorSnackBar(context, 'Facebook sign in failed');
     }
   }
 
